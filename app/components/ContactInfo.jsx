@@ -11,11 +11,10 @@ module.exports = React.createClass({
             <div className="panel panel-default">
                 <div className="panel-heading">
                     {this.props.info.name}
+                    <span className="pull-right text-uppercase delete-button" onClick={this.deleteContact}>&times;</span>
+                    </div>
+                    <div className="panel-body">{this.props.info.number}</div>
                 </div>
-                <div className="panel-body">
-                    {this.props.info.number}
-                </div>
-            </div>
-        )
-    }
-})
+            )
+        }
+    })

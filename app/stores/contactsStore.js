@@ -21,8 +21,8 @@ function ContactStore() {
 
     function deleteContact(contact) {
         var _index;
-        contacts.map(function (s, index) {
-            if (s.name === contact.name) {
+        contacts.map(function (c, index) {
+            if (c.name === contact.name) {
                 _index = index;
             }
         });
