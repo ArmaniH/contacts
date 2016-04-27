@@ -2,8 +2,12 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var async = require('async');
+var _ = require("underscore");
 var cassandra = require('cassandra-driver');
 var client = new cassandra.Client({contactPoints: ['127.0.0.1'], keyspace: 'contactdb'})
+
+var router = require("express").Router();
+router.route("/contacts/:id?").get(getContacts).post(addContact).delete(deleteContact);
 
 function getContacts(req, res) {
     Contact.find(function (err, contacts) {
@@ -33,3 +37,5 @@ function deleteContact(req, res) {
             res.json(removed);
     });
 }
+
+module.exports = router;

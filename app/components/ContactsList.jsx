@@ -13,7 +13,7 @@ module.exports = React.createClass({
                     {
                         this.props.contacts.map(function(s,index){
                             return(
-                                <ContactInfo info={s} key={"contact"+index} />
+                                <ContactInfo info={s} key={"contact"+server} />
                             )
                         })
                     }

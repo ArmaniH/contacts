@@ -1,38 +1,39 @@
 var dispatcher = require("../dispatcher");
+var contactService = require("../services/contactService");
 
 function ContactStore() {
     var listeners = [];
-    var contacts = [{ name: "Steve Steverson", number:"804-804-8044" },
-                    { name: "Bishop Wells",number:"804-408-4088" },
-                    { name: "Armani Hall", number:"804-868-8653" }];
-
-    function getContacts() {
-        return contacts;
-    }
 
     function onChange(listener) {
+        getContacts(listener);
         listeners.push(listener);
     }
 
+    function getContacts(cb){
+        contactService.getContacts().then(function (res) {
+            cb(res);
+        });
+    }
+
     function addContact(contact) {
-        contacts.push(contact)
-        triggerListeners();
+        contactService.addContact(contact).then(function (res) {
+            console.log(res);
+            triggerListeners();
+        });
     }
 
     function deleteContact(contact) {
-        var _index;
-        contacts.map(function (c, index) {
-            if (c.name === contact.name) {
-                _index = index;
-            }
+        contactService.deleteContact(contact).then(function (res) {
+            console.log(res);
+            triggerListeners();
         });
-        contacts.splice(_index, 1);
-        triggerListeners();
     }
 
     function triggerListeners() {
-        listeners.forEach(function (listener) {
-            listener(contacts);
+        getContacts(function (res) {
+            listeners.forEach(function (listener) {
+                listener(res);
+            });
         });
     }
 
@@ -51,7 +52,6 @@ function ContactStore() {
     });
 
     return {
-        getContacts: getContacts,
         onChange: onChange
     }
 }
